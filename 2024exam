@@ -3,6 +3,8 @@
 # Author: Your Name
 # File: your_name_python_task.py
 # ==============================
+import os
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"  # 防止 OMP 冲突
 
 import pandas as pd
 import sqlite3
@@ -19,15 +21,14 @@ import torch.optim as optim
 df = pd.read_csv('sales_data.csv')
 
 # Fill missing values with appropriate defaults
-df['Product'].fillna('Unknown', inplace=True)
-df['Quantity'].fillna(0, inplace=True)
-df['Price'].fillna(df['Price'].mean(), inplace=True)
-df['Total'].fillna(df['Quantity'] * df['Price'], inplace=True)
+df['Product'] = df['Product'].fillna('Unknown')
+df['Quantity'] = df['Quantity'].fillna(0)
+df['Price'] = df['Price'].fillna(df['Price'].mean())
+df['Total'] = df['Total'].fillna(df['Quantity'] * df['Price'])
 
 # Convert Date to datetime
 df['Date'] = pd.to_datetime(df['Date'], errors='coerce')
 
-# Ensure Total = Quantity * Price
 df['Computed_Total'] = df['Quantity'] * df['Price']
 df.loc[df['Total'] != df['Computed_Total'], 'Total'] = df['Computed_Total']
 df.drop(columns=['Computed_Total'], inplace=True)
