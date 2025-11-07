@@ -1,1 +1,155 @@
+You have been provided with a CSV file, transport_delays.csv, containing data on urban transport delays across several corridors and years (2023–2025). 
 
+Your task is to complete the following three parts in a single Python file using pandas, sqlite3, matplotlib, and torch. Ensure your script runs start to finish without manual interaction and prints the requested summaries exactly where specified. 
+
+Your file should be named your_name_transport_task.py (use your own name).
+
+Python Task 1: Data Analysis and Visualisation [13 Marks] 
+Task 1a: Data Loading and Cleaning 
+Load the file transport_delays.csv into a pandas DataFrame. 
+Print the first 5 rows and the shape of the DataFrame. The output should be similar to the one below when the code is run. [2 marks] 
+
+A screen shot of a computer
+
+AI-generated content may be incorrect. 
+
+Convert Dates 
+Convert the Date column to a datetime object and print the column type for Date. The output should be similar to the one below when the code is run. [2 marks] 
+
+A screen shot of a computer
+
+AI-generated content may be incorrect. 
+
+Handle Missing Data 
+Print the number of missing values BEFORE filling.  Check for and handle missing values. If any are found, fill them with appropriate values (UNKNOWN for text and 0 for numbers). Print the number of missing values AFTER filling. The output should be similar to the one below when the code is run. [2 marks] 
+
+A screenshot of a computer
+
+AI-generated content may be incorrect. 
+
+Ensure Delay_Type is uppercase and stripped of spaces; print unique Delay_Type types. [2 marks] 
+
+A white text on a blue background
+
+AI-generated content may be incorrect. 
+
+Task 1b: Data Visualisation 
+Total Delay Minutes per Type 
+Create a bar chart showing total Minutes_Delayed per Delay_Type. 
+Also, print the total minutes delayed per type. [2 marks] 
+
+ 
+
+ 
+
+A graph of blue rectangular bars
+
+AI-generated content may be incorrect. 
+
+Create a line chart of total Minutes_Delayed per month for 2025.[2 marks] 
+
+The outputs should match the sample screenshot below. 
+
+ 
+
+ You must also print the totals per month in 2025. [1 mark] 
+
+The outputs should match the sample screenshot below. 
+
+A screen shot of a computer
+
+AI-generated content may be incorrect. 
+
+Python Task 2: Database Management and File Handling [15 Marks] 
+Task 2a: Database Creation and Data Insertion 
+Create an SQLite database named TransitDB. [1 mark] 
+
+Create a table named Delays with appropriate columns to store the data (Date, Corridor, Delay_Type, Minutes_Delayed (INTEGER) with a UNIQUE constraint on (Date, Corridor, Delay_Type). [2 marks] 
+
+Insert the cleaned and processed data from Python Task 1 into the Delays table. 
+Ensure no duplicate entries are added (respect the UNIQUE constraint). 
+Print the number of rows inserted. The output should be similar to the one below when the code is run. [3 marks] 
+
+ 
+
+ Task 2b: Querying the Database 
+Total Delay Minutes in 2025 
+Query the total Minutes_Delayed recorded in 2025 and print the result. 
+The output should be similar to the one below when the code is run. [2.5 marks] 
+
+ 
+
+Top Corridors in 2025 
+Query the top five corridors with the highest total Minutes_Delayed in 2025 and print the results. The output should be similar to the one below when the code is run. [2.5 marks] 
+
+ 
+
+ Task 2c: Exporting Results 
+Write a query to save the top 5 corridors from Task 2b to a CSV file named top5_corridors.csv. [3 marks] 
+
+Print the DataFrame before saving. [1 mark] 
+The output should be similar to the one below when the code is run. 
+
+ 
+
+Python Task 3: Neural Network (PyTorch) [12 Marks] 
+In this task, you will define and train a small feedforward neural network using PyTorch to predict the likelihood of a high-delay day (binary classification) based on simulated transport-and-weather metrics. 
+
+The network will use synthetic data generated from simulated features: average speed (km/h), reported incidents, rainfall (mm), and event intensity (0–10). 
+You will train the model, observe its loss during training, and visualise the results. 
+
+Task 3a: Data & Reproducibility 
+Make sure that every time you run your script, the random values generated are the same each time (fix random seed). [0.5 mark] 
+
+Generate synthetic features X with 200 samples, each having 4 input features (representing: average speed, incidents reported, rainfall, event intensity). Use the following code to create a 200×4 NumPy array representing transport metrics. This ensures each feature follows a realistic distribution. [1 mark] 
+
+ 
+
+Generate binary target labels y containing values 0 or 1. Use the following code to create realistic binary labels y (0 or 1), where the likelihood of a “1” depends on the input features. For example, more incidents, more rainfall, and lower speeds increase the chance of a high-delay day. [1 mark] 
+
+ 
+
+Print the shapes of X and y to confirm their dimensions. [0.5 mark] 
+Example expected output format shown in the original screenshots. 
+
+ 
+
+Task 3b: Model Definition and Initialization 
+Define a neural network class, e.g., DelayRiskNN, that extends torch.nn.Module. [1.5 marks] 
+The network should include the following layers: 
+
+Input Layer: 4 input neurons 
+
+Hidden Layer: 8 neurons with ReLU activation 
+
+Output Layer: 1 neuron with Sigmoid activation 
+
+Instantiate the DelayRiskNN model with: [1.5 marks] 
+
+torch.nn.BCELoss() as the loss function 
+
+torch.optim.SGD as the optimizer with a learning rate of 0.05 
+Print the model architecture (this is the expected printed block when the code is run). [1 mark] 
+
+ 
+
+Task 3c: Training the Model 
+Train the network for 10 epochs. [2 marks] 
+
+ In each epoch: 
+
+Perform a forward pass to compute predictions 
+
+Calculate the loss using the defined loss function 
+
+Perform backpropagation and update model weights using the optimiser. 
+
+ 
+
+Print the training loss for each epoch in the following format (here is the example output) [1 mark] 
+
+ 
+
+Task 3d: Loss Visualisation 
+After training, plot the recorded training loss values over all epochs using matplotlib. 
+The output should be similar to the one below when the code is run. [2 marks] 
